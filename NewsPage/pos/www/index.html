@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern POS System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="light-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <a href="../../index.html" class="logo" style="text-decoration: none;">
+                <span class="logo-icon">☕</span>
+                <span class="logo-text">CafePOS</span>
+            </a>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-view="home">
+                    <span class="icon">🏠</span>
+                    <span class="label">ホーム</span>
+                </button>
+                <button class="nav-item" data-view="pos">
+                    <span class="icon">🛒</span>
+                    <span class="label">レジ</span>
+                </button>
+                <button class="nav-item" data-view="orders">
+                    <span class="icon">📋</span>
+                    <span class="label">注文履歴</span>
+                </button>
+                <button class="nav-item" data-view="news">
+                    <span class="icon">📰</span>
+                    <span class="label">ニュース</span>
+                </button>
+                <button class="nav-item" data-view="dashboard">
+                    <span class="icon">📊</span>
+                    <span class="label">売上分析</span>
+                </button>
+            </nav>
+            <div class="theme-toggle">
+                <button id="themeSwitcher">🌙 ダークモード</button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Home View -->
+            <section id="homeView" class="view active">
+                <header class="content-header">
+                    <h1>CafePOS へようこそ</h1>
+                </header>
+                <div class="welcome-section" style="background-color: var(--bg-card); padding: 40px; border-radius: var(--radius); border: 1px solid var(--border); text-align: center; margin-bottom: 24px;">
+                    <h2 style="font-size: 32px; margin-bottom: 16px;">最高の一杯と体験を。</h2>
+                    <p style="color: var(--text-muted); font-size: 18px; margin-bottom: 32px;">
+                        CafePOS は、シンプルでパワフルなカフェ管理システムです。
+                    </p>
+                    <button class="checkout-btn" onclick="switchView('pos')" style="display: inline-block; padding: 16px 40px; border: none; font-size: 18px;">
+                        レジを開く
+                    </button>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>本日の営業</h3>
+                        <p style="margin-top: 10px;">AM 8:00 - PM 8:00</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>最新ニュース</h3>
+                        <p id="latestNewsTitle" style="margin-top: 10px; font-weight: 500;">読み込み中...</p>
+                        <button class="clear-cart" onclick="switchView('news')" style="margin-top: 8px; color: var(--accent); border: none; background: none; cursor: pointer;">詳細を見る</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- POS View -->
+            <section id="posView" class="view">
+                <header class="content-header">
+                    <div class="search-bar">
+                        <input type="text" id="productSearch" placeholder="商品を検索 (Ctrl+K)...">
+                    </div>
+                    <div class="categories">
+                        <button class="cat-btn active" data-category="all">すべて</button>
+                        <button class="cat-btn" data-category="coffee">コーヒー</button>
+                        <button class="cat-btn" data-category="tea">紅茶</button>
+                        <button class="cat-btn" data-category="bakery">ベーカリー</button>
+                        <button class="cat-btn" data-category="food">フード</button>
+                    </div>
+                </header>
+                <div class="product-grid" id="productGrid">
+                    <!-- Products will be injected here -->
+                </div>
+            </section>
+
+            <!-- News View -->
+            <section id="newsView" class="view">
+                <header class="content-header">
+                    <h2>ニュースとお知らせ</h2>
+                </header>
+                <div class="order-list" id="newsList">
+                    <!-- News items will be injected here -->
+                </div>
+            </section>
+
+            <!-- Orders View -->
+            <section id="ordersView" class="view">
+                <header class="content-header">
+                    <h2>注文履歴</h2>
+                </header>
+                <div class="order-list" id="orderList">
+                    <!-- Recent orders will be shown here -->
+                </div>
+            </section>
+
+            <!-- Dashboard View -->
+            <section id="dashboardView" class="view">
+                <header class="content-header">
+                    <h2>売上レポート</h2>
+                </header>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>今日の売上</h3>
+                        <p class="stat-value" id="todaySales">¥0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>合計注文数</h3>
+                        <p class="stat-value" id="totalOrders">0</p>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <!-- Placeholder for a simple CSS/JS chart -->
+                    <div id="salesChart" class="placeholder-chart">Sales Data Visualization</div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Right Sidebar (Cart) -->
+        <aside class="cart-sidebar">
+            <div class="cart-header">
+                <h2>注文内容</h2>
+                <button class="clear-cart" id="clearCart">クリア</button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be injected here -->
+                <div class="empty-cart-msg">カートは空です</div>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-totals">
+                    <div class="total-row">
+                        <span>小計</span>
+                        <span id="subtotal">¥0</span>
+                    </div>
+                    <div class="total-row">
+                        <span>消費税 (10%)</span>
+                        <span id="tax">¥0</span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>合計</span>
+                        <span id="total">¥0</span>
+                    </div>
+                </div>
+                <button class="checkout-btn" id="checkoutBtn" disabled>決済へ進む</button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Payment Modal -->
+    <dialog id="paymentDialog">
+        <div class="modal-content">
+            <h3>お支払い</h3>
+            <div class="payment-summary">
+                <p>合計金額: <strong id="modalTotal">¥0</strong></p>
+            </div>
+            <div class="payment-methods">
+                <button class="method-btn active">💵 現金</button>
+                <button class="method-btn">💳 カード</button>
+                <button class="method-btn">📱 電子マネー</button>
+            </div>
+            <div class="cash-input-group">
+                <label for="cashReceived">お預かり金額:</label>
+                <input type="number" id="cashReceived" step="1" placeholder="0">
+            </div>
+            <div class="change-summary">
+                <span>お釣り:</span>
+                <strong id="changeAmount">¥0</strong>
+            </div>
+            <div class="modal-actions">
+                <button id="cancelPayment">キャンセル</button>
+                <button id="confirmPayment" class="primary">注文確定</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script src="script.js"></script>
+</body>
+</html>
