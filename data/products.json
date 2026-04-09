@@ -1,0 +1,14 @@
+[
+    { "id": 1, "name": "エスプレッソ", "price": 500, "category": "coffee", "icon": "☕" },
+    { "id": 2, "name": "カプチーノ", "price": 650, "category": "coffee", "icon": "🥤" },
+    { "id": 3, "name": "ラテ", "price": 700, "category": "coffee", "icon": "🥛" },
+    { "id": 4, "name": "緑茶", "price": 480, "category": "tea", "icon": "🍵" },
+    { "id": 5, "name": "アールグレイ", "price": 500, "category": "tea", "icon": "🫖" },
+    { "id": 6, "name": "クロワッサン", "price": 400, "category": "bakery", "icon": "🥐" },
+    { "id": 7, "name": "チョコマーフィン", "price": 450, "category": "bakery", "icon": "🧁" },
+    { "id": 8, "name": "ブルーベリースコーン", "price": 480, "category": "bakery", "icon": "🥯" },
+    { "id": 9, "name": "クラブサンドイッチ", "price": 1200, "category": "food", "icon": "🥪" },
+    { "id": 10, "name": "シーザーサラダ", "price": 1000, "category": "food", "icon": "🥗" },
+    { "id": 11, "name": "ベーグル & クリームチーズ", "price": 600, "category": "bakery", "icon": "🥯" },
+    { "id": 12, "name": "モカ", "price": 750, "category": "coffee", "icon": "🍫" }
+]
