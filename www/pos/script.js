@@ -1,40 +1,39 @@
-// Sample Data
-const PRODUCTS = [
-    { id: 1, name: 'エスプレッソ', price: 500, category: 'coffee', icon: '☕' },
-    { id: 2, name: 'カプチーノ', price: 650, category: 'coffee', icon: '🥤' },
-    { id: 3, name: 'ラテ', price: 700, category: 'coffee', icon: '🥛' },
-    { id: 4, name: '緑茶', price: 480, category: 'tea', icon: '🍵' },
-    { id: 5, name: 'アールグレイ', price: 500, category: 'tea', icon: '🫖' },
-    { id: 6, name: 'クロワッサン', price: 400, category: 'bakery', icon: '🥐' },
-    { id: 7, name: 'チョコマーフィン', price: 450, category: 'bakery', icon: '🧁' },
-    { id: 8, name: 'ブルーベリースコーン', price: 480, category: 'bakery', icon: '🥯' },
-    { id: 9, name: 'クラブサンドイッチ', price: 1200, category: 'food', icon: '🥪' },
-    { id: 10, name: 'シーザーサラダ', price: 1000, category: 'food', icon: '🥗' },
-    { id: 11, name: 'ベーグル & クリームチーズ', price: 600, category: 'bakery', icon: '🥯' },
-    { id: 12, name: 'モカ', price: 750, category: 'coffee', icon: '🍫' },
-];
-
-const NEWS = [
-    {
-        id: 1,
-        title: '春の新メニューが登場！',
-        date: '2024-04-01',
-        content: '爽やかな季節にぴったりの「さくらラテ」と、ボリュームたっぷりの「春野菜のクラブサンドイッチ」がメニューに加わりました。ぜひレジから注文してみてください。'
-    },
-    {
-        id: 2,
-        title: '4月の営業時間変更について',
-        date: '2024-03-28',
-        content: '社員研修のため、4月15日は17:00までの営業とさせていただきます。ご不便をおかけしますが、何卒ご了承ください。'
-    }
-];
-
-// App State
+// Global State
+let products = [];
+let news = [];
 let cart = [];
 let currentCategory = 'all';
 let searchQuery = '';
 let orders = JSON.parse(localStorage.getItem('pos_orders') || '[]');
 let currentView = 'home';
+
+// API Configuration
+const API_BASE = '/api';
+
+async function fetchData(endpoint) {
+    try {
+        const response = await fetch(`${API_BASE}${endpoint}`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return await response.json();
+    } catch (e) {
+        console.error("Could not fetch data: ", e);
+        return null;
+    }
+}
+
+async function postData(endpoint, data) {
+    try {
+        const response = await fetch(`${API_BASE}${endpoint}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        return await response.json();
+    } catch (e) {
+        console.error("Could not post data: ", e);
+        return null;
+    }
+}
 
 // DOM Elements
 const productGrid = document.getElementById('productGrid');
@@ -61,7 +60,11 @@ const confirmPaymentBtn = document.getElementById('confirmPayment');
 const cancelPaymentBtn = document.getElementById('cancelPayment');
 
 // Initialize
-function init() {
+async function init() {
+    // Fetch initial data from Server
+    products = await fetchData('/products') || [];
+    news = await fetchData('/news') || [];
+
     renderProducts();
     updateCart();
     renderOrders();
@@ -135,7 +138,7 @@ function init() {
         changeAmount.textContent = formatCurrency(change);
     });
 
-    confirmPaymentBtn.addEventListener('click', () => {
+    confirmPaymentBtn.addEventListener('click', async () => {
         const { subtotal, tax, total } = calculateTotals();
         const order = {
             id: 'ORD-' + Date.now(),
@@ -147,13 +150,20 @@ function init() {
             status: '完了'
         };
         
-        orders.push(order);
-        localStorage.setItem('pos_orders', JSON.stringify(orders));
+        // Save to Server via API
+        const result = await postData('/orders', order);
         
-        cart = [];
-        updateCart();
-        paymentDialog.close();
-        alert('注文が完了しました！');
+        if (result && result.status === 'success') {
+            orders.push(order);
+            localStorage.setItem('pos_orders', JSON.stringify(orders));
+            
+            cart = [];
+            updateCart();
+            paymentDialog.close();
+            alert('注文が完了し、サーバーに保存されました！');
+        } else {
+            alert('注文の送信に失敗しました。サーバーの状態を確認してください。');
+        }
     });
 
     cancelPaymentBtn.addEventListener('click', () => {
@@ -191,7 +201,7 @@ function switchView(viewName) {
 function renderNews() {
     if (!newsList) return;
     
-    newsList.innerHTML = NEWS.map(item => `
+    newsList.innerHTML = news.map(item => `
         <div class="product-card" style="cursor: default; width: 100%; flex-direction: column; align-items: flex-start; gap: 12px; padding: 24px;">
             <div style="display: flex; justify-content: space-between; width: 100%;">
                 <strong>🆕 ${item.title}</strong>
@@ -201,14 +211,14 @@ function renderNews() {
         </div>
     `).join('');
 
-    if (latestNewsTitle && NEWS.length > 0) {
-        latestNewsTitle.textContent = NEWS[0].title;
+    if (latestNewsTitle && news.length > 0) {
+        latestNewsTitle.textContent = news[0].title;
     }
 }
 
 // Rendering Functions
 function renderProducts() {
-    const filtered = PRODUCTS.filter(p => {
+    const filtered = products.filter(p => {
         const matchCat = currentCategory === 'all' || p.category === currentCategory;
         const matchSearch = p.name.toLowerCase().includes(searchQuery);
         return matchCat && matchSearch;
@@ -226,7 +236,7 @@ function renderProducts() {
 }
 
 function addToCart(productId) {
-    const product = PRODUCTS.find(p => p.id === productId);
+    const product = products.find(p => p.id === productId);
     const existing = cart.find(item => item.id === productId);
 
     if (existing) {

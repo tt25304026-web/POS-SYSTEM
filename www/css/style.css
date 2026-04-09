@@ -6,7 +6,7 @@ html {
   font-size:100%;
 }
 body { 
-  font-family:sans-serif;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   color:#432;
   line-height: 1.7;
 }
@@ -212,6 +212,18 @@ aside p{
 .sub-menu a:hover {
   color: #0bd;
 }
+
+/* CONTACT
+--------------------*/
+#contact {
+  background-image: url(../images/news-bg.jpg);
+  height: 270px;
+  margin-bottom: 40px;
+}
+#contact .page-title{
+  text-align: center;
+}
+
 
 
 

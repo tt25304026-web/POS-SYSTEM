@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern POS System</title>
+    <title>WCB Cafe POS システム</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Philosopher&display=swap" rel="stylesheet">
 </head>
 <body class="light-theme">
     <div class="app-container">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
-            <a href="../../index.html" class="logo" style="text-decoration: none;">
-                <span class="logo-icon">☕</span>
-                <span class="logo-text">CafePOS</span>
+            <a href="../index.html" class="logo" style="text-decoration: none;">
+                <img src="images/logo.svg" alt="WCB Cafe Logo" style="width: 50px; margin-bottom: 4px;">
+                <span class="logo-text" style="color: var(--text-main); font-weight: bold;">CafePOS</span>
             </a>
             <nav class="nav-menu">
                 <button class="nav-item active" data-view="home">
@@ -34,7 +34,7 @@
                 </button>
                 <button class="nav-item" data-view="dashboard">
                     <span class="icon">📊</span>
-                    <span class="label">売上分析</span>
+                    <span class="label">ダッシュボード</span>
                 </button>
             </nav>
             <div class="theme-toggle">
@@ -47,15 +47,15 @@
             <!-- Home View -->
             <section id="homeView" class="view active">
                 <header class="content-header">
-                    <h1>CafePOS へようこそ</h1>
+                    <h1>WCB Cafe POS へようこそ</h1>
                 </header>
                 <div class="welcome-section" style="background-color: var(--bg-card); padding: 40px; border-radius: var(--radius); border: 1px solid var(--border); text-align: center; margin-bottom: 24px;">
                     <h2 style="font-size: 32px; margin-bottom: 16px;">最高の一杯と体験を。</h2>
                     <p style="color: var(--text-muted); font-size: 18px; margin-bottom: 32px;">
-                        CafePOS は、シンプルでパワフルなカフェ管理システムです。
+                        WCB Cafe POS は、シンプルでパワフルなカフェ管理システムです。
                     </p>
                     <button class="checkout-btn" onclick="switchView('pos')" style="display: inline-block; padding: 16px 40px; border: none; font-size: 18px;">
-                        レジを開く
+                        レジを開始する
                     </button>
                 </div>
                 <div class="stats-grid">
@@ -113,7 +113,7 @@
             <!-- Dashboard View -->
             <section id="dashboardView" class="view">
                 <header class="content-header">
-                    <h2>売上レポート</h2>
+                    <h2>ダッシュボード</h2>
                 </header>
                 <div class="stats-grid">
                     <div class="stat-card">

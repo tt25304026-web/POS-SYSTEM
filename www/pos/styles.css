@@ -1,31 +1,32 @@
 :root {
-    /* Light Theme */
-    --bg-main: #f8f9fa;
-    --bg-sidebar: #ffffff;
+    /* Light Theme - Based on WCB Cafe Brand */
+    --bg-main: #fdfbf7;
+    --bg-sidebar: #fcf9f4;
     --bg-card: #ffffff;
-    --text-main: #1a1d23;
-    --text-muted: #6c757d;
-    --border: #e9ecef;
-    --accent: #2563eb;
-    --accent-light: #eff6ff;
-    --accent-hover: #1d4ed8;
+    --text-main: #432;
+    --text-muted: #6e655d;
+    --border: #e8e0d5;
+    --accent: #0bd;
+    --accent-light: #e0f7ff;
+    --accent-hover: #0090aa;
     --danger: #dc2626;
     --success: #16a34a;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --radius: 12px;
     --font-inter: 'Inter', sans-serif;
+    --font-philosopher: 'Philosopher', sans-serif;
 }
 
 body.dark-theme {
-    --bg-main: #0f172a;
-    --bg-sidebar: #1e293b;
-    --bg-card: #1e293b;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --border: #334155;
-    --accent: #3b82f6;
+    --bg-main: #2a1f18;
+    --bg-sidebar: #1e1611;
+    --bg-card: #382a20;
+    --text-main: #fdfbf7;
+    --text-muted: #b0a397;
+    --border: #4d3e33;
+    --accent: #0bd;
     --accent-light: #1e293b;
-    --accent-hover: #60a5fa;
+    --accent-hover: #0090aa;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
 
@@ -70,7 +71,16 @@ body {
     align-items: center;
 }
 
+.content-header h1, 
+.content-header h2, 
+.view h1, 
+.view h2 {
+    font-family: var(--font-philosopher);
+    color: var(--text-main);
+}
+
 .logo-text {
+    font-family: var(--font-philosopher);
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
