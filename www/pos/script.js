@@ -62,8 +62,12 @@ const cancelPaymentBtn = document.getElementById('cancelPayment');
 // Initialize
 async function init() {
     // Fetch initial data from Server
-    products = await fetchData('/products') || [];
-    news = await fetchData('/news') || [];
+    try {
+        products = await fetchData('/products') || [];
+        news = await fetchData('/news') || [];
+    } catch (err) {
+        console.error("Initialization error:", err);
+    }
 
     renderProducts();
     updateCart();
@@ -218,6 +222,11 @@ function renderNews() {
 
 // Rendering Functions
 function renderProducts() {
+    if (products.length === 0) {
+        productGrid.innerHTML = '<div class="empty-cart-msg">商品を読み込み中、または商品がありません。</div>';
+        return;
+    }
+
     const filtered = products.filter(p => {
         const matchCat = currentCategory === 'all' || p.category === currentCategory;
         const matchSearch = p.name.toLowerCase().includes(searchQuery);
@@ -229,6 +238,7 @@ function renderProducts() {
             <div class="product-img">${p.icon}</div>
             <div class="product-info">
                 <h3>${p.name}</h3>
+                <p class="product-desc">${p.description || ''}</p>
                 <p class="price">${formatCurrency(p.price)}</p>
             </div>
         </div>
