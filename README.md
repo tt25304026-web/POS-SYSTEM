@@ -39,15 +39,32 @@ POS-SYSTEM/
 └── README.md
 ```
 
-## ⚡ 起動方法
+## ⚡ 起動方法 (Tomcat)
 
 ### 前提条件
+- Apache Tomcat 9.0 以上がインストールされていること。
 - JDK 8 以上がインストールされていること。
 
 ### 手順
 
+1. **コンパイル (Servlet)**:
+   Tomcat の `lib` フォルダ内にある `servlet-api.jar` をクラスパスに含めてコンパイルします。
+   ```powershell
+   javac -cp "C:\path\to\tomcat\lib\servlet-api.jar" src\PosApiServlet.java -d WEB-INF\classes
+   ```
+   ※ `C:\path\to\tomcat` は実際の Tomcat インストールパスに置き換えてください。
+
+2. **デプロイ**:
+   プロジェクトのディレクトリ（`POS-SYSTEM`）ごと、Tomcat の `webapps` フォルダにコピーします。
+   または、プロジェクトのルートで以下の内容を含む `war` ファイルを作成してデプロイします。
+
+3. **アクセス**:
+   Tomcat を起動し、ブラウザで以下の URL を開きます。
+   `http://localhost:8080/POS-SYSTEM/index.html`
+
+## ⚡ 起動方法 (簡易サーバー - 開発用)
+
 1. **コンパイル**:
-   ターミナル（PowerShell/CMD）でプロジェクトのルートディレクトリに移動し、以下を実行します。
    ```powershell
    javac src/PosServer.java -d .
    ```
