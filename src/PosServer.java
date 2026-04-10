@@ -31,8 +31,18 @@ public class PosServer {
         server.createContext("/api", new ApiHandler("data"));
         
         server.setExecutor(null); // creates a default executor
-        System.out.println("POS System Server started at http://localhost:" + port);
         server.start();
+        System.out.println("POS System Server started at http://localhost:" + port);
+        System.out.println("Server is running. Press Ctrl+C to stop.");
+        
+        // Keep the main thread alive with a simple loop
+        while (true) {
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
     }
 
     static class ApiHandler implements HttpHandler {
@@ -67,8 +77,25 @@ public class PosServer {
         }
 
         private void handleGet(HttpExchange exchange, String path) throws IOException {
-            String fileName = path.substring(path.lastIndexOf("/") + 1) + ".json";
+            // Log for debugging
+            System.out.println("API GET Request: " + path);
+            
+            // Clean up the path: remove /api and trailing slashes
+            String resource = path;
+            if (resource.startsWith("/api")) {
+                resource = resource.substring(4);
+            }
+            if (resource.startsWith("/")) resource = resource.substring(1);
+            if (resource.endsWith("/")) resource = resource.substring(0, resource.length() - 1);
+            
+            if (resource.isEmpty()) {
+                sendResponse(exchange, 400, "{\"error\": \"Missing resource name\"}");
+                return;
+            }
+
+            String fileName = resource + ".json";
             File file = new File(dataDir, fileName);
+            System.out.println("Looking for data file: " + file.getAbsolutePath());
 
             if (file.exists() && file.isFile()) {
                 byte[] content = Files.readAllBytes(file.toPath());
@@ -127,12 +154,27 @@ public class PosServer {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             String requestPath = exchange.getRequestURI().getPath();
-            if (requestPath.equals("/")) {
-                requestPath = "/index.html";
+            
+            // Fix: ensure requestPath doesn't start with / for Paths.get on Windows
+            String relativePath = requestPath;
+            if (relativePath.startsWith("/")) {
+                relativePath = relativePath.substring(1);
+            }
+            
+            if (relativePath.isEmpty() || relativePath.equals("/")) {
+                relativePath = "index.html";
+            } else if (relativePath.endsWith("/")) {
+                relativePath += "index.html";
             }
 
-            Path path = Paths.get(baseDir, requestPath);
+            Path path = Paths.get(baseDir, relativePath);
             File file = path.toFile();
+
+            // Handle directories: if user requests /pos/ and it exists, look for /pos/index.html
+            if (file.isDirectory()) {
+                file = new File(file, "index.html");
+                path = file.toPath();
+            }
 
             if (file.exists() && file.isFile()) {
                 String contentType = Files.probeContentType(path);

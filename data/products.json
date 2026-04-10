@@ -1,14 +1,23 @@
 [
-    { "id": 1, "name": "エスプレッソ", "price": 500, "category": "coffee", "icon": "☕" },
-    { "id": 2, "name": "カプチーノ", "price": 650, "category": "coffee", "icon": "🥤" },
-    { "id": 3, "name": "ラテ", "price": 700, "category": "coffee", "icon": "🥛" },
-    { "id": 4, "name": "緑茶", "price": 480, "category": "tea", "icon": "🍵" },
-    { "id": 5, "name": "アールグレイ", "price": 500, "category": "tea", "icon": "🫖" },
-    { "id": 6, "name": "クロワッサン", "price": 400, "category": "bakery", "icon": "🥐" },
-    { "id": 7, "name": "チョコマーフィン", "price": 450, "category": "bakery", "icon": "🧁" },
-    { "id": 8, "name": "ブルーベリースコーン", "price": 480, "category": "bakery", "icon": "🥯" },
-    { "id": 9, "name": "クラブサンドイッチ", "price": 1200, "category": "food", "icon": "🥪" },
-    { "id": 10, "name": "シーザーサラダ", "price": 1000, "category": "food", "icon": "🥗" },
-    { "id": 11, "name": "ベーグル & クリームチーズ", "price": 600, "category": "bakery", "icon": "🥯" },
-    { "id": 12, "name": "モカ", "price": 750, "category": "coffee", "icon": "🍫" }
+    { "id": 1, "name": "エスプレッソ", "price": 500, "category": "coffee", "icon": "☕", "description": "濃厚な香りと味わいの本格派" },
+    { "id": 2, "name": "カプチーノ", "price": 650, "category": "coffee", "icon": "🥤", "description": "きめ細やかな泡のミルクとともに" },
+    { "id": 3, "name": "カフェラテ", "price": 700, "category": "coffee", "icon": "🥛", "description": "エスプレッソとミルクの絶妙なバランス" },
+    { "id": 12, "name": "カフェモカ", "price": 750, "category": "coffee", "icon": "🍫", "description": "チョコの甘みが引き立つ贅沢な一杯" },
+    { "id": 13, "name": "キャラメルマキアート", "price": 780, "category": "coffee", "icon": "🍮", "description": "甘いキャラメルソースがアクセント" },
+    
+    { "id": 4, "name": "特選緑茶", "price": 480, "category": "tea", "icon": "🍵", "description": "厳選された茶葉の香りをそのままに" },
+    { "id": 5, "name": "アールグレイ", "price": 500, "category": "tea", "icon": "🫖", "description": "ベルガモットが香る華やかな紅茶" },
+    { "id": 14, "name": "ほうじ茶ラテ", "price": 650, "category": "tea", "icon": "🍂", "description": "香ばしいほうじ茶とミルクの和風ラテ" },
+    { "id": 15, "name": "カモミールティー", "price": 550, "category": "tea", "icon": "🌼", "description": "リラックスしたい時におすすめのハーブティー" },
+    
+    { "id": 6, "name": "焼きたてクロワッサン", "price": 400, "category": "bakery", "icon": "🥐", "description": "バター香るサクサク食感" },
+    { "id": 7, "name": "チョコマーフィン", "price": 450, "category": "bakery", "icon": "🧁", "description": "しっとり生地にたっぷりチョコチップ" },
+    { "id": 8, "name": "ブルーベリースコーン", "price": 480, "category": "bakery", "icon": "🥯", "description": "甘酸っぱいブルーベリーがたっぷり" },
+    { "id": 11, "name": "ベーグル & クリームチーズ", "price": 600, "category": "bakery", "icon": "🥯", "description": "もちもちベーグルと濃厚チーズ" },
+    { "id": 16, "name": "季節のフルーツタルト", "price": 850, "category": "bakery", "icon": "🥧", "description": "旬のフルーツを贅沢に使った一品" },
+    
+    { "id": 9, "name": "クラブサンドイッチ", "price": 1200, "category": "food", "icon": "🥪", "description": "具だくさんでボリューム満点" },
+    { "id": 10, "name": "シーザーサラダ", "price": 1000, "category": "food", "icon": "🥗", "description": "新鮮な野菜と自家製ドレッシング" },
+    { "id": 17, "name": "本日のパスタ", "price": 1350, "category": "food", "icon": "🍝", "description": "日替わりで楽しめるシェフのこだわり" },
+    { "id": 18, "name": "特製ビーフカレー", "price": 1500, "category": "food", "icon": "🍛", "description": "じっくり煮込んだコク深い味わい" }
 ]
