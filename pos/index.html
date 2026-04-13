@@ -54,7 +54,7 @@
                     <p style="color: var(--text-muted); font-size: 18px; margin-bottom: 32px;">
                         WCB Cafe POS は、シンプルでパワフルなカフェ管理システムです。
                     </p>
-                    <button class="checkout-btn" onclick="switchView('pos')" style="display: inline-block; padding: 16px 40px; border: none; font-size: 18px;">
+                    <button class="checkout-btn" onclick="window.location.hash='pos'" style="display: inline-block; padding: 16px 40px; border: none; font-size: 18px;">
                         レジを開始する
                     </button>
                 </div>
@@ -66,7 +66,7 @@
                     <div class="stat-card">
                         <h3>最新ニュース</h3>
                         <p id="latestNewsTitle" style="margin-top: 10px; font-weight: 500;">読み込み中...</p>
-                        <button class="clear-cart" onclick="switchView('news')" style="margin-top: 8px; color: var(--accent); border: none; background: none; cursor: pointer;">詳細を見る</button>
+                        <button class="clear-cart" onclick="window.location.hash='news'" style="margin-top: 8px; color: var(--accent); border: none; background: none; cursor: pointer;">詳細を見る</button>
                     </div>
                 </div>
             </section>
