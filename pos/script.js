@@ -13,9 +13,16 @@ const API_BASE = '../api';
 
 async function fetchData(endpoint) {
     try {
-        const response = await fetch(`${API_BASE}${endpoint}`);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return await response.json();
+        const url = `${API_BASE}${endpoint}`;
+        console.log(`Fetching from: ${url}`);
+        const response = await fetch(url);
+        if (!response.ok) {
+            console.error(`HTTP error! status: ${response.status} for ${url}`);
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(`Received data for ${endpoint}:`, data);
+        return data;
     } catch (e) {
         console.error("Could not fetch data: ", e);
         return null;
@@ -62,10 +69,18 @@ const cancelPaymentBtn = document.getElementById('cancelPayment');
 
 // Initialize
 async function init() {
+    console.log("Initializing App...");
+    console.log("API_BASE:", API_BASE);
+    
     // Fetch initial data from Server
     try {
+        console.log("Fetching products...");
         products = await fetchData('/products') || [];
+        console.log("Products loaded:", products.length);
+        
+        console.log("Fetching news...");
         news = await fetchData('/news') || [];
+        console.log("News loaded:", news.length);
     } catch (err) {
         console.error("Initialization error:", err);
     }
@@ -247,16 +262,24 @@ function renderProducts() {
         return matchCat && matchSearch;
     });
 
-    productGrid.innerHTML = filtered.map(p => `
-        <div class="product-card" onclick="addToCart(${p.id})">
-            <div class="product-img">${p.icon}</div>
-            <div class="product-info">
-                <h3>${p.name}</h3>
-                <p class="product-desc">${p.description || ''}</p>
-                <p class="price">${formatCurrency(p.price)}</p>
+    productGrid.innerHTML = filtered.map(p => {
+        const imageHtml = p.image 
+            ? `<img src="../${p.image}" alt="${p.name}" class="product-img-file">`
+            : `<div class="product-icon">${p.icon}</div>`;
+            
+        return `
+            <div class="product-card" onclick="addToCart(${p.id})">
+                <div class="product-img-container">
+                    ${imageHtml}
+                </div>
+                <div class="product-info">
+                    <h3>${p.name}</h3>
+                    <p class="product-desc">${p.description || ''}</p>
+                    <p class="price">${formatCurrency(p.price)}</p>
+                </div>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function addToCart(productId) {
