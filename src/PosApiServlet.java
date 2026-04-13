@@ -29,13 +29,20 @@ public class PosApiServlet extends HttpServlet {
         // We assume the data folder is in the root of the webapp context or specified by env
         // For local development, we'll try to find it in a fixed path or relative to context
         dataDir = getServletContext().getRealPath("/WEB-INF/data");
+        if (dataDir == null) {
+            // Fallback for some server configurations
+            dataDir = getServletContext().getRealPath("/") + "WEB-INF/data";
+        }
         
         // Ensure data directory exists
         File dir = new File(dataDir);
         if (!dir.exists()) {
-            dir.mkdirs();
+            boolean created = dir.mkdirs();
+            System.out.println("Data directory created: " + created);
         }
-        System.out.println("PosApiServlet initialized. Data directory: " + dataDir);
+        System.out.println("PosApiServlet initialized.");
+        System.out.println("  Context Path: " + getServletContext().getContextPath());
+        System.out.println("  Data directory (resolved): " + dataDir);
     }
 
     @Override
@@ -43,6 +50,7 @@ public class PosApiServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String pathInfo = request.getPathInfo(); // e.g., /products
+        System.out.println("GET Request pathInfo: " + pathInfo);
         if (pathInfo == null || pathInfo.equals("/")) {
             sendError(response, HttpServletResponse.SC_BAD_REQUEST, "Missing resource name");
             return;
@@ -55,14 +63,10 @@ public class PosApiServlet extends HttpServlet {
 
         String fileName = resource + ".json";
         File file = new File(dataDir, fileName);
-
-        // If not in WEB-INF/data, check if it's in a sibling data/ folder (for dev)
-        if (!file.exists()) {
-            // Try to find it in the project root relative to current working dir
-            file = new File("data", fileName);
-        }
+        System.out.println("Attempting to read file: " + file.getAbsolutePath());
 
         if (file.exists() && file.isFile()) {
+            System.out.println("File found. Sending response.");
             byte[] content = Files.readAllBytes(file.toPath());
             response.setContentType("application/json; charset=UTF-8");
             response.setContentLength(content.length);
@@ -71,6 +75,7 @@ public class PosApiServlet extends HttpServlet {
                 os.write(content);
             }
         } else {
+            System.out.println("File NOT found: " + file.getAbsolutePath());
             sendError(response, HttpServletResponse.SC_NOT_FOUND, "Not Found: " + fileName);
         }
     }

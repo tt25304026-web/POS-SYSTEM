@@ -1,14 +1,16 @@
 [
-    { "id": 1, "name": "エスプレッソ", "price": 500, "category": "coffee", "icon": "☕", "description": "濃厚な香りと味わいの本格派" },
+    { "id": 1, "name": "エスプレッソ", "price": 500, "category": "coffee", "icon": "☕", "image": "images/coffee-art.jpg", "description": "濃厚な香りと味わいの本格派" },
     { "id": 2, "name": "カプチーノ", "price": 650, "category": "coffee", "icon": "🥤", "description": "きめ細やかな泡のミルクとともに" },
     { "id": 3, "name": "カフェラテ", "price": 700, "category": "coffee", "icon": "🥛", "description": "エスプレッソとミルクの絶妙なバランス" },
     { "id": 12, "name": "カフェモカ", "price": 750, "category": "coffee", "icon": "🍫", "description": "チョコの甘みが引き立つ贅沢な一杯" },
     { "id": 13, "name": "キャラメルマキアート", "price": 780, "category": "coffee", "icon": "🍮", "description": "甘いキャラメルソースがアクセント" },
+    { "id": 19, "name": "ピスタチオフラッペ", "price": 850, "category": "coffee", "icon": "🥤", "image": "images/pistachio-frappe.jpg", "description": "濃厚なピスタチオの香りとジェラートの食感" },
     
     { "id": 4, "name": "特選緑茶", "price": 480, "category": "tea", "icon": "🍵", "description": "厳選された茶葉の香りをそのままに" },
     { "id": 5, "name": "アールグレイ", "price": 500, "category": "tea", "icon": "🫖", "description": "ベルガモットが香る華やかな紅茶" },
     { "id": 14, "name": "ほうじ茶ラテ", "price": 650, "category": "tea", "icon": "🍂", "description": "香ばしいほうじ茶とミルクの和風ラテ" },
     { "id": 15, "name": "カモミールティー", "price": 550, "category": "tea", "icon": "🌼", "description": "リラックスしたい時におすすめのハーブティー" },
+    { "id": 20, "name": "黒糖抹茶ラテ", "price": 780, "category": "tea", "icon": "🍵", "image": "images/brown-sugar-matcha.jpg", "description": "沖縄産黒糖のコクと抹茶のほろ苦さが絶妙" },
     
     { "id": 6, "name": "焼きたてクロワッサン", "price": 400, "category": "bakery", "icon": "🥐", "description": "バター香るサクサク食感" },
     { "id": 7, "name": "チョコマーフィン", "price": 450, "category": "bakery", "icon": "🧁", "description": "しっとり生地にたっぷりチョコチップ" },
