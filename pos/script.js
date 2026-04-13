@@ -8,7 +8,8 @@ let orders = JSON.parse(localStorage.getItem('pos_orders') || '[]');
 let currentView = 'home';
 
 // API Configuration
-const API_BASE = '/api';
+// Relative to /pos/ folder, the API is at /api
+const API_BASE = '../api';
 
 async function fetchData(endpoint) {
     try {
@@ -76,7 +77,20 @@ async function init() {
     updateStats();
     
     // Initial view
-    switchView('home');
+    const hash = window.location.hash.replace('#', '');
+    if (hash && ['home', 'pos', 'orders', 'news', 'dashboard'].includes(hash)) {
+        switchView(hash);
+    } else {
+        switchView('home');
+    }
+
+    // Hash change listener for browser navigation
+    window.addEventListener('hashchange', () => {
+        const h = window.location.hash.replace('#', '');
+        if (h && ['home', 'pos', 'orders', 'news', 'dashboard'].includes(h)) {
+            switchView(h);
+        }
+    });
 
     // Category filtering
     catBtns.forEach(btn => {
@@ -94,7 +108,7 @@ async function init() {
         if (!targetView) return;
 
         item.addEventListener('click', () => {
-            switchView(targetView);
+            window.location.hash = targetView;
         });
     });
 
